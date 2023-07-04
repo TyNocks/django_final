@@ -109,8 +109,7 @@ class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     grade =  models.IntegerField(default=1)
     question_text = models.TextField()
-    choice_set = models.ManyToManyField(Choice)
-    lesson_id = models.ForeignKey(Lesson)
+    lesson_id = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
@@ -128,7 +127,7 @@ class Question(models.Model):
     # Indicate if this choice of the question is a correct one or not
     # Other fields and methods you would like to design
 class Choice(models.Model):
-    question_id = models.ForeignKey(Question)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.TextField()
     is_correct = models.BooleanField(default=False)
 
@@ -142,5 +141,5 @@ class Submission(models.Model):
 #    Other fields and methods you would like to design
 
 class Submission_Choices(models.Model):
-    submission_id = models.ForeignKey(Submission)
-    choice_id = models.ForeignKey(Choice)
+    submission_id = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    choice_id = models.ForeignKey(Choice, on_delete=models.CASCADE)
